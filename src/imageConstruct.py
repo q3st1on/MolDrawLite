@@ -1,5 +1,6 @@
 from PIL import Image, ImageChops
 import tkinter as tk
+import time
 import os
 
 class imageWindow(tk.Toplevel):
@@ -20,13 +21,15 @@ class imageWindow(tk.Toplevel):
         self.optionFrame.pack(side=tk.BOTTOM, padx=8, pady=(4, 8), ipadx=5, ipady=5, fill=tk.X)
 
     def makeImage(self):
-        self.imageFrame.saveImage(pagewidth=self.xVal, pageheight=self.yVal)
+        self.imageFrame.test(self.xVal, self.yVal)
+        time.sleep(60)
+        self.imageFrame.saveImage()
         self.imageFrame.pack_forget()
         del self.imageFrame
         self.destroy()
     
     def getParent(self):
-        return self.parent()
+        return self.parent
     
     def getY(self):
         return self.yVal
@@ -52,7 +55,7 @@ class pixelFrame(tk.Frame):
         self.yInput.pack(side=tk.LEFT)
     
     def getParent(self):
-        return self.parent()
+        return self.parent
 
 
 class optionFrame(tk.Frame):
@@ -67,7 +70,7 @@ class optionFrame(tk.Frame):
         self.button.pack(side=tk.BOTTOM, padx=(4, 8), pady=8, fill=tk.X)
     
     def getParent(self):
-        return self.parent()
+        return self.parent
 
 
 class imageCanvas(tk.Canvas):
@@ -104,8 +107,12 @@ class imageCanvas(tk.Canvas):
         print(f"{x}, {y}")
         self.create_text(x, y, text=txt, font=('Helvetica','18','bold'), fill=colour, justify=tk.CENTER)
     
+    def test(self, width, height):
+        self.postscript(file = 'temp.eps', colormode='color', pagewidth=width, pageheight=height) 
+    # def saveImage(self, width, height):
+        # self.postscript(file = 'temp.eps', colormode='color', pagewidth=width, pageheight=height) 
     def saveImage(self):
-        self.postscript(file = 'temp.eps', colormode='color', pagewidth=7000, pageheight=5000) 
+        print('eps')
         img = Image.open('temp.eps') 
         ma, mi = img.size
         bg = Image.new(img.mode, img.size, img.getpixel((0,0)))
@@ -120,4 +127,4 @@ class imageCanvas(tk.Canvas):
         os.remove('temp.eps')
     
     def getParent(self):
-        return self.parent()
+        return self.parent

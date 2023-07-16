@@ -128,4 +128,4 @@ class genCanvas(tk.Canvas):
         self.parent.bondcount += 1
     
     def getParent(self):
-        return self.parent()
+        return self.parent

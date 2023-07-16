@@ -66,4 +66,4 @@ class topMenu(tk.Frame):
                 self.subscript.config(bg='light gray')
     
     def getParent(self):
-        return self.parent()
+        return self.parent

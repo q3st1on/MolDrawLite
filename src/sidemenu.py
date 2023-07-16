@@ -191,4 +191,4 @@ class sideMenu(tk.Frame):
         self.qb.configure(bg='light gray')
     
     def getParent(self):
-        return self.parent()
+        return self.parent

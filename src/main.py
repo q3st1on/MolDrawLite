@@ -5,6 +5,7 @@ from src.canvas import genCanvas
 from src.sidemenu import sideMenu
 from src.topmenu import topMenu
 from src.imageConstruct import imageWindow
+from src.ptable import tableWindow
 import time
 
 class MolDrawLite(tk.Tk):
@@ -37,7 +38,7 @@ class MolDrawLite(tk.Tk):
         self.bondno = 1
         self.eqmode = '+'
         self.keybuff = ""
-
+        
         self.sidebar = sideMenu(self, bd=1, relief=tk.RAISED, width=20)
         self.sidebar.pack(side=tk.LEFT, padx = (4, 8), pady = (8, 8), fill=tk.Y, ipadx=5, ipady=5)
 
@@ -46,6 +47,9 @@ class MolDrawLite(tk.Tk):
 
         self.canvas = genCanvas(self, bd=1, relief=tk.RAISED, closeenough=2)
         self.canvas.pack(side = tk.BOTTOM, anchor=tk.SE, fill=tk.BOTH, padx = (4, 8), pady = (4, 8), expand=True)
+
+        self.tablewin = tableWindow(self)
+        self.tablewin.mainloop()
 
         self.bind("<KeyPress>", lambda x: self.keydown(x))
 

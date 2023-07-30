@@ -1,11 +1,11 @@
 
-from src.imageConstruct import ImageWindow
-from src.atomDicts import PeriodicTableClass
-from src.ptable import TableWindow
-from src.sidemenu import SideMenu
-from src.canvas import GenCanvas
-from src.classes import App
-from src.topmenu import TopMenu
+from src._imageConstruct import ImageWindow
+from src._atomDicts import PeriodicTableClass
+from src._ptable import TableWindow
+from src._sidemenu import SideMenu
+from src._canvas import GenCanvas
+from src._classes import App
+from src._topmenu import TopMenu
 import tkinter.messagebox
 import tkinter as tk
 import time

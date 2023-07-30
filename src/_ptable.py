@@ -1,5 +1,5 @@
 import tkinter as tk
-from src.classes import TopLevel, Frame
+from src._classes import TopLevel, Frame
 from tkinter.colorchooser import askcolor
 
 class TableWindow(TopLevel):

@@ -1,4 +1,4 @@
-from src.classes import TopLevel, Canvas, Frame
+from src._classes import TopLevel, Canvas, Frame
 from PIL import Image, ImageChops
 import tkinter as tk
 import time

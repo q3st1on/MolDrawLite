@@ -1,5 +1,5 @@
-from src.util import nearRound, closestNode
-from src.classes import LiveCanvas
+from src._util import nearRound, closestNode
+from src._classes import LiveCanvas
 import tkinter as tk
 import math
 

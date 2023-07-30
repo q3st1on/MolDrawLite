@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from src.classes import Frame, ButtonCanvas
+from src._classes import Frame, ButtonCanvas
 
 class SideMenu(Frame):
     def __init__(self, parent, *args, **kwargs):

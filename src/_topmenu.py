@@ -1,5 +1,5 @@
 import tkinter as tk
-from src.classes import Frame
+from src._classes import Frame
 
 class TopMenu(Frame):
     def __init__(self, parent, *args, **kwargs):

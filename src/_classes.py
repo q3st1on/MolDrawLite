@@ -1,6 +1,6 @@
 import tkinter as tk
 import platform
-from src.atomDicts import PeriodicTableClass
+from src._atomDicts import PeriodicTableClass
 
 class TopLevel(tk.Toplevel):
     def __init__(self, parent, *args, **kwargs):

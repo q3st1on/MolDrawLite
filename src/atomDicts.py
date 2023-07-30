@@ -1,120 +1,53 @@
-periodic_table = [
-    {'symbol': 'H', 'name': 'Hydrogen', 'bonds': 1, 'colour': 'gray45', 'pos': (0, 0), 'anum': 1, 'ram': 1.008}, 
-    {'symbol': 'He', 'name': 'Helium', 'bonds': 0, 'pos': (0, 17), 'anum': 2, 'ram': 4.003}, 
-    {'symbol': 'Li', 'name': 'Lithium', 'bonds': 1, 'pos': (1, 0), 'anum': 3, 'ram': 6.941}, 
-    {'symbol': 'Be', 'name': 'Beryllium', 'bonds': 2, 'pos': (1, 1), 'anum': 4, 'ram': 9.012}, 
-    {'symbol': 'B', 'name': 'Boron', 'bonds': 3, 'colour': 'light slate blue', 'pos': (1, 12), 'anum': 5, 'ram': 10.811}, 
-    {'symbol': 'C', 'name': 'Carbon', 'bonds': 4, 'colour': 'gray11', 'pos': (1, 13), 'anum': 6, 'ram': 12.011}, 
-    {'symbol': 'N', 'name': 'Nitrogen', 'bonds': 3, 'colour': 'deep sky blue', 'pos': (1, 14), 'anum': 7, 'ram': 14.007}, 
-    {'symbol': 'O', 'name': 'Oxygen', 'bonds': 2, 'colour': 'red2', 'pos': (1, 15), 'anum': 8, 'ram': 15.999}, 
-    {'symbol': 'F', 'name': 'Fluorine', 'bonds': 1, 'colour': 'lime green', 'pos': (1, 16), 'anum': 9, 'ram': 18.998}, 
-    {'symbol': 'Ne', 'name': 'Neon', 'bonds': 0, 'pos': (1, 17), 'anum': 10, 'ram': 20.18}, 
-    {'symbol': 'Na', 'name': 'Sodium', 'bonds': 1, 'pos': (2, 0), 'anum': 11, 'ram': 22.99}, 
-    {'symbol': 'Mg', 'name': 'Magnesium', 'bonds': 2, 'pos': (2, 1), 'anum': 12, 'ram': 24.305}, 
-    {'symbol': 'Al', 'name': 'Aluminum', 'bonds': 3, 'pos': (2, 12), 'anum': 13, 'ram': 26.982}, 
-    {'symbol': 'Si', 'name': 'Silicon', 'bonds': 4, 'colour': 'SkyBlue4', 'pos': (2, 13), 'anum': 14, 'ram': 28.085}, 
-    {'symbol': 'P', 'name': 'Phosphorus', 'bonds': 3, 'colour': 'DodgerBlue4', 'pos': (2, 14), 'anum': 15, 'ram': 30.974}, 
-    {'symbol': 'S', 'name': 'Sulfur', 'bonds': 2, 'colour': 'yellow3', 'pos': (2, 15), 'anum': 16, 'ram': 32.065}, 
-    {'symbol': 'Cl', 'name': 'Chlorine', 'bonds': 1, 'colour': 'green yellow', 'pos': (2, 16), 'anum': 17, 'ram': 35.453}, 
-    {'symbol': 'Ar', 'name': 'Argon', 'bonds': 0, 'pos': (2, 17), 'anum': 18, 'ram': 39.948}, 
-    {'symbol': 'K', 'name': 'Potassium', 'bonds': 1, 'pos': (3, 0), 'anum': 19, 'ram': 39.098}, 
-    {'symbol': 'Ca', 'name': 'Calcium', 'bonds': 2, 'pos': (3, 1), 'anum': 20, 'ram': 40.078}, 
-    {'symbol': 'Sc', 'name': 'Scandium', 'bonds': 3, 'pos': (3, 2), 'anum': 21, 'ram': 44.956}, 
-    {'symbol': 'Ti', 'name': 'Titanium', 'bonds': 4, 'pos': (3, 3), 'anum': 22, 'ram': 47.867}, 
-    {'symbol': 'V', 'name': 'Vanadium', 'bonds': 5, 'pos': (3, 4), 'anum': 23, 'ram': 50.941}, 
-    {'symbol': 'Cr', 'name': 'Chromium', 'bonds': 6, 'pos': (3, 5), 'anum': 24, 'ram': 51.996}, 
-    {'symbol': 'Mn', 'name': 'Manganese', 'bonds': 7, 'pos': (3, 6), 'anum': 25, 'ram': 54.938}, 
-    {'symbol': 'Fe', 'name': 'Iron', 'bonds': 8, 'pos': (3, 7), 'anum': 26, 'ram': 55.845}, 
-    {'symbol': 'Co', 'name': 'Cobalt', 'bonds': 9, 'pos': (3, 8), 'anum': 27, 'ram': 58.933}, 
-    {'symbol': 'Ni', 'name': 'Nickel', 'bonds': 10, 'pos': (3, 9), 'anum': 28, 'ram': 58.693}, 
-    {'symbol': 'Cu', 'name': 'Copper', 'bonds': 11, 'pos': (3, 10), 'anum': 29, 'ram': 63.546}, 
-    {'symbol': 'Zn', 'name': 'Zinc', 'bonds': 12, 'pos': (3, 11), 'anum': 30, 'ram': 65.409}, 
-    {'symbol': 'Ga', 'name': 'Gallium', 'bonds': 3, 'pos': (3, 12), 'anum': 31, 'ram': 69.723}, 
-    {'symbol': 'Ge', 'name': 'Germanium', 'bonds': 4, 'pos': (3, 13), 'anum': 32, 'ram': 72.64}, 
-    {'symbol': 'As', 'name': 'Arsenic', 'bonds': 3, 'pos': (3, 14), 'anum': 33, 'ram': 74.922}, 
-    {'symbol': 'Se', 'name': 'Selenium', 'bonds': 2, 'pos': (3, 15), 'anum': 34, 'ram': 78.96}, 
-    {'symbol': 'Br', 'name': 'Bromine', 'bonds': 1, 'colour': 'LightSalmon4', 'pos': (3, 16), 'anum': 35, 'ram': 79.904}, 
-    {'symbol': 'Kr', 'name': 'Krypton', 'bonds': 0, 'pos': (3, 17), 'anum': 36, 'ram': 83.798}, 
-    {'symbol': 'Rb', 'name': 'Rubidium', 'bonds': 1, 'pos': (4, 0), 'anum': 37, 'ram': 85.468}, 
-    {'symbol': 'Sr', 'name': 'Strontium', 'bonds': 2, 'pos': (4, 1), 'anum': 38, 'ram': 87.62}, 
-    {'symbol': 'Y', 'name': 'Yttrium', 'bonds': 3, 'pos': (4, 2), 'anum': 39, 'ram': 88.906}, 
-    {'symbol': 'Zr', 'name': 'Zirconium', 'bonds': 4, 'pos': (4, 3), 'anum': 40, 'ram': 91.224}, 
-    {'symbol': 'Nb', 'name': 'Niobium', 'bonds': 5, 'pos': (4, 4), 'anum': 41, 'ram': 92.906}, 
-    {'symbol': 'Mo', 'name': 'Molybdenum', 'bonds': 6, 'pos': (4, 5), 'anum': 42, 'ram': 95.94}, 
-    {'symbol': 'Tc', 'name': 'Technetium', 'bonds': 7, 'pos': (4, 6), 'anum': 43, 'ram': 98}, 
-    {'symbol': 'Ru', 'name': 'Ruthenium', 'bonds': 8, 'pos': (4, 7), 'anum': 44, 'ram': 101.07}, 
-    {'symbol': 'Rh', 'name': 'Rhodium', 'bonds': 9, 'pos': (4, 8), 'anum': 45, 'ram': 102.906}, 
-    {'symbol': 'Pd', 'name': 'Palladium', 'bonds': 10, 'pos': (4, 9), 'anum': 46, 'ram': 106.42}, 
-    {'symbol': 'Ag', 'name': 'Silver', 'bonds': 11, 'pos': (4, 10), 'anum': 47, 'ram': 107.868}, 
-    {'symbol': 'Cd', 'name': 'Cadmium', 'bonds': 12, 'pos': (4, 11), 'anum': 48, 'ram': 112.411}, 
-    {'symbol': 'In', 'name': 'Indium', 'bonds': 3, 'pos': (4, 12), 'anum': 49, 'ram': 114.818}, 
-    {'symbol': 'Sn', 'name': 'Tin', 'bonds': 4, 'pos': (4, 13), 'anum': 50, 'ram': 118.71}, 
-    {'symbol': 'Sb', 'name': 'Antimony', 'bonds': 3, 'pos': (4, 14), 'anum': 51, 'ram': 121.76}, 
-    {'symbol': 'Te', 'name': 'Tellurium', 'bonds': 2, 'pos': (4, 15), 'anum': 52, 'ram': 127.6}, 
-    {'symbol': 'I', 'name': 'Iodine', 'bonds': 1, 'colour': 'blue violet', 'pos': (4, 16), 'anum': 53, 'ram': 126.904}, 
-    {'symbol': 'Xe', 'name': 'Xenon', 'bonds': 0, 'pos': (4, 17), 'anum': 54, 'ram': 131.293}, 
-    {'symbol': 'Cs', 'name': 'Cesium', 'bonds': 1, 'pos': (5, 0), 'anum': 55, 'ram': 132.905}, 
-    {'symbol': 'Ba', 'name': 'Barium', 'bonds': 2, 'pos': (5, 1), 'anum': 56, 'ram': 137.327}, 
-    {'symbol': 'La', 'name': 'Lanthanum', 'bonds': 3, 'pos': (5, 2), 'anum': 57, 'ram': 138.905}, 
-    {'symbol': 'Ce', 'name': 'Cerium', 'bonds': 4, 'pos': (8, 3), 'anum': 58, 'ram': 140.116}, 
-    {'symbol': 'Pr', 'name': 'Praseodymium', 'bonds': 5, 'pos': (8, 4), 'anum': 59, 'ram': 140.908}, 
-    {'symbol': 'Nd', 'name': 'Neodymium', 'bonds': 6, 'pos': (8, 5), 'anum': 60, 'ram': 144.24}, 
-    {'symbol': 'Pm', 'name': 'Promethium', 'bonds': 7, 'pos': (8, 6), 'anum': 61, 'ram': 145}, 
-    {'symbol': 'Sm', 'name': 'Samarium', 'bonds': 8, 'pos': (8, 7), 'anum': 62, 'ram': 150.36}, 
-    {'symbol': 'Eu', 'name': 'Europium', 'bonds': 9, 'pos': (8, 8), 'anum': 63, 'ram': 151.964}, 
-    {'symbol': 'Gd', 'name': 'Gadolinium', 'bonds': 10, 'pos': (8, 9), 'anum': 64, 'ram': 157.25}, 
-    {'symbol': 'Tb', 'name': 'Terbium', 'bonds': 11, 'pos': (8, 10), 'anum': 65, 'ram': 158.925}, 
-    {'symbol': 'Dy', 'name': 'Dysprosium', 'bonds': 12, 'pos': (8, 11), 'anum': 66, 'ram': 162.5}, 
-    {'symbol': 'Ho', 'name': 'Holmium', 'bonds': 13, 'pos': (8, 12), 'anum': 67, 'ram': 164.93}, 
-    {'symbol': 'Er', 'name': 'Erbium', 'bonds': 14, 'pos': (8, 13), 'anum': 68, 'ram': 167.259}, 
-    {'symbol': 'Tm', 'name': 'Thulium', 'bonds': 15, 'pos': (8, 14), 'anum': 69, 'ram': 168.934}, 
-    {'symbol': 'Yb', 'name': 'Ytterbium', 'bonds': 16, 'pos': (8, 15), 'anum': 70, 'ram': 173.04}, 
-    {'symbol': 'Lu', 'name': 'Lutetium', 'bonds': 17, 'pos': (8, 16), 'anum': 71, 'ram': 174.967}, 
-    {'symbol': 'Hf', 'name': 'Hafnium', 'bonds': 4, 'pos': (5, 3), 'anum': 72, 'ram': 178.49}, 
-    {'symbol': 'Ta', 'name': 'Tantalum', 'bonds': 5, 'pos': (5, 4), 'anum': 73, 'ram': 180.948}, 
-    {'symbol': 'W', 'name': 'Tungsten', 'bonds': 6, 'pos': (5, 5), 'anum': 74, 'ram': 183.84}, 
-    {'symbol': 'Re', 'name': 'Rhenium', 'bonds': 7, 'pos': (5, 6), 'anum': 75, 'ram': 186.207}, 
-    {'symbol': 'Os', 'name': 'Osmium', 'bonds': 8, 'pos': (5, 7), 'anum': 76, 'ram': 190.23}, 
-    {'symbol': 'Ir', 'name': 'Iridium', 'bonds': 9, 'pos': (5, 8), 'anum': 77, 'ram': 192.217}, 
-    {'symbol': 'Pt', 'name': 'Platinum', 'bonds': 10, 'pos': (5, 9), 'anum': 78, 'ram': 195.078}, 
-    {'symbol': 'Au', 'name': 'Gold', 'bonds': 11, 'pos': (5, 10), 'anum': 79, 'ram': 196.967}, 
-    {'symbol': 'Hg', 'name': 'Mercury', 'bonds': 12, 'pos': (5, 11), 'anum': 80, 'ram': 200.59}, 
-    {'symbol': 'Tl', 'name': 'Thallium', 'bonds': 3, 'pos': (5, 12), 'anum': 81, 'ram': 204.383}, 
-    {'symbol': 'Pb', 'name': 'Lead', 'bonds': 4, 'pos': (5, 13), 'anum': 82, 'ram': 207.2}, 
-    {'symbol': 'Bi', 'name': 'Bismuth', 'bonds': 3, 'pos': (5, 14), 'anum': 83, 'ram': 208.98}, 
-    {'symbol': 'Po', 'name': 'Polonium', 'bonds': 2, 'pos': (5, 15), 'anum': 84, 'ram': 209}, 
-    {'symbol': 'At', 'name': 'Astatine', 'bonds': 1, 'pos': (5, 16), 'anum': 85, 'ram': 210}, 
-    {'symbol': 'Rn', 'name': 'Radon', 'bonds': 0, 'pos': (5, 17), 'anum': 86, 'ram': 222}, 
-    {'symbol': 'Fr', 'name': 'Francium', 'bonds': 1, 'pos': (6, 0), 'anum': 87, 'ram': 223}, 
-    {'symbol': 'Ra', 'name': 'Radium', 'bonds': 2, 'pos': (6, 1), 'anum': 88, 'ram': 226}, 
-    {'symbol': 'Ac', 'name': 'Actinium', 'bonds': 3, 'pos': (6, 2), 'anum': 89, 'ram': 227}, 
-    {'symbol': 'Th', 'name': 'Thorium', 'bonds': 4, 'pos': (9, 3), 'anum': 90, 'ram': 232.038}, 
-    {'symbol': 'Pa', 'name': 'Protactinium', 'bonds': 5, 'pos': (9, 4), 'anum': 91, 'ram': 231.036}, 
-    {'symbol': 'U', 'name': 'Uranium', 'bonds': 6, 'pos': (9, 5), 'anum': 92, 'ram': 238.029}, 
-    {'symbol': 'Np', 'name': 'Neptunium', 'bonds': 7, 'pos': (9, 6), 'anum': 93, 'ram': 237}, 
-    {'symbol': 'Pu', 'name': 'Plutonium', 'bonds': 8, 'pos': (9, 7), 'anum': 94, 'ram': 244}, 
-    {'symbol': 'Am', 'name': 'Americium', 'bonds': 9, 'pos': (9, 8), 'anum': 95, 'ram': 243}, 
-    {'symbol': 'Cm', 'name': 'Curium', 'bonds': 10, 'pos': (9, 9), 'anum': 96, 'ram': 247}, 
-    {'symbol': 'Bk', 'name': 'Berkelium', 'bonds': 11, 'pos': (9, 10), 'anum': 97, 'ram': 247}, 
-    {'symbol': 'Cf', 'name': 'Californium', 'bonds': 12, 'pos': (9, 11), 'anum': 98, 'ram': 251}, 
-    {'symbol': 'Es', 'name': 'Einsteinium', 'bonds': 13, 'pos': (9, 12), 'anum': 99, 'ram': 252}, 
-    {'symbol': 'Fm', 'name': 'Fermium', 'bonds': 14, 'pos': (9, 13), 'anum': 100, 'ram': 257}, 
-    {'symbol': 'Md', 'name': 'Mendelevium', 'bonds': 15, 'pos': (9, 14), 'anum': 101, 'ram': 258}, 
-    {'symbol': 'No', 'name': 'Nobelium', 'bonds': 16, 'pos': (9, 15), 'anum': 102, 'ram': 259}, 
-    {'symbol': 'Lr', 'name': 'Lawrencium', 'bonds': 17, 'pos': (9, 16), 'anum': 103, 'ram': 262}, 
-    {'symbol': 'Rf', 'name': 'Rutherfordium', 'bonds': 4, 'pos': (6, 3), 'anum': 104, 'ram': 261}, 
-    {'symbol': 'Db', 'name': 'Dubnium', 'bonds': 5, 'pos': (6, 4), 'anum': 105, 'ram': 262}, 
-    {'symbol': 'Sg', 'name': 'Seaborgium', 'bonds': 6, 'pos': (6, 5), 'anum': 106, 'ram': 266}, 
-    {'symbol': 'Bh', 'name': 'Bohrium', 'bonds': 7, 'pos': (6, 6), 'anum': 107, 'ram': 264}, 
-    {'symbol': 'Hs', 'name': 'Hassium', 'bonds': 8, 'pos': (6, 7), 'anum': 108, 'ram': 277}, 
-    {'symbol': 'Mt', 'name': 'Meitnerium', 'bonds': 9, 'pos': (6, 8), 'anum': 109, 'ram': 268}, 
-    {'symbol': 'Ds', 'name': 'Darmstadtium', 'bonds': 10, 'pos': (6, 9), 'anum': 110, 'ram': 281}, 
-    {'symbol': 'Rg', 'name': 'Roentgenium', 'bonds': 11, 'pos': (6, 10), 'anum': 111, 'ram': 272}, 
-    {'symbol': 'Cn', 'name': 'Copernicium', 'bonds': 12, 'pos': (6, 11), 'anum': 112, 'ram': 285}, 
-    {'symbol': 'Nh', 'name': 'Nihonium', 'bonds': 3, 'pos': (6, 12), 'anum': 113, 'ram': 286}, 
-    {'symbol': 'Fl', 'name': 'Flerovium', 'bonds': 2, 'pos': (6, 13), 'anum': 114, 'ram': 289}, 
-    {'symbol': 'Mc', 'name': 'Moscovium', 'bonds': 1, 'pos': (6, 14), 'anum': 115, 'ram': 289}, 
-    {'symbol': 'Lv', 'name': 'Livermorium', 'bonds': 0, 'pos': (6, 15), 'anum': 116, 'ram': 293}, 
-    {'symbol': 'Ts', 'name': 'Tennessine', 'bonds': 1, 'pos': (6, 16), 'anum': 117, 'ram': 294}, 
-    {'symbol': 'Og', 'name': 'Oganesson', 'bonds': 0, 'pos': (6, 17), 'anum': 118, 'ram': 294}, 
-]
+import json
+import os
+
+class Atom:
+    def __init__(self, atomVals):
+        self.name = atomVals['name']
+        self.symbol = atomVals['symbol']
+        self.pos = atomVals['pos']
+        self.num = atomVals['anum']
+        self.mass = atomVals['ram']
+    
+    def setColour(self, colour):
+        self.colour=colour
+    
+
+class PeriodicTableClass:
+    def __init__(self):
+        self._dir = os.path.dirname(os.path.realpath(__file__))
+        self._table = {}
+        with open(self._dir+'/table.json', 'r') as f:
+            tbl = json.loads(f.read())
+            for i in tbl:
+                self._table[i] = Atom(tbl[str(i)])
+
+        with open(self._dir+'/colourcfg.json', 'r') as f:
+            colours = json.loads(f.read())
+            for i in colours:
+                if i != 'equation':
+                    self._table[i].setColour(colours[str(i)])
+                else:
+                    self.equationCol = colours[str(i)]
+    
+    def writeTable(self):
+        with open(self._dir+'/table.json', 'w') as f:
+            f.write(json.dumps(self._table))
+
+    def writeColours(self):
+        cols = {"equation": self.equationCol}
+        for i in self._table:
+            cols[i] = self._table[i].colour
+
+        with open(self._dir+'/colourcfg.json', 'w') as f:
+            f.write(json.dumps(cols))
+
+    def atomNo(self, anum):
+        return self._table[str(anum)]
+    
+    def __iter__(self):
+        for i in self._table.values():
+            yield i
+
+
+PeriodicTable = PeriodicTableClass()

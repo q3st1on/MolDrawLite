@@ -1,4 +1,5 @@
 from src.util import myround, closest_node
+from src.atomDicts import PeriodicTable
 import math
 import tkinter as tk
 
@@ -18,7 +19,7 @@ class genCanvas(tk.Canvas):
         else:
             self.parent.old_letter_coords = rx,ry
         x,y = self.parent.old_letter_coords
-        self.parent.old_letter = self.create_text(x, y+3, text=self.parent.selectedelem(), font=('Helvetica','18','bold'), fill=self.parent.elemcolour(), justify=tk.CENTER)
+        self.parent.old_letter = self.create_text(x, y+3, text=self.parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self.parent.getElement().colour, justify=tk.CENTER)
 
     def move_letter(self, e):
         x, y = e.x, e.y
@@ -31,51 +32,51 @@ class genCanvas(tk.Canvas):
                 self.parent.old_letter_coords = rx,ry
             self.delete(self.parent.old_letter)
         x,y = self.parent.old_letter_coords
-        self.parent.old_letter = self.create_text(x, y+3, text=self.parent.selectedelem(), font=('Helvetica','18','bold'), fill=self.parent.elemcolour(), justify=tk.CENTER)
+        self.parent.old_letter = self.create_text(x, y+3, text=self.parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self.parent.getElement().colour, justify=tk.CENTER)
 
     def fix_letter(self, e):
         x, y = self.parent.old_letter_coords
         self.delete(self.parent.old_letter)
-        self.create_text(x, y+3, text=self.parent.selectedelem(), font=('Helvetica','18','bold'), fill=self.parent.elemcolour(), justify=tk.CENTER, tags=f"1 {self.parent.elemcolour()} {self.parent.selectedelem()} {x} {y}")
+        self.create_text(x, y+3, text=self.parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self.parent.getElement().colour, justify=tk.CENTER, tags=f"1 {self.parent.getElement().colour} {self.parent.getElement().symbol} {x} {y}")
         self.parent.atomcenters.append((x,y))
         if self.parent.old_letter_coords in self.parent.bondendsopen:
             self.parent.bondendsopen.remove(self.parent.old_letter_coords)
         self.parent.atomcount += 1
 
     def makeeq(self, e):
-        x, y = myround(e.x, 60), myround(e.y, 60)
+        x, y = myround(e.x, 30), myround(e.y, 30)
         self.parent.old_eq_coords = x, y
         if self.parent.eqmode == '+':
-            self.parent.old_eq_objs = [self.create_text(x, y-1, text='+', font=('Helvetica','30','bold'), fill='dark green', justify=tk.CENTER)]
+            self.parent.old_eq_objs = [self.create_text(x, y-1, text='+', font=('Helvetica','30','bold'), fill=PeriodicTable.equationCol, justify=tk.CENTER)]
         elif self.parent.eqmode == 'forward':
-            self.parent.old_eq_objs = [self.create_line(x-30, y, x+30, y, arrow=tk.LAST, fill = 'dark green', width = 5)]
+            self.parent.old_eq_objs = [self.create_line(x-30, y, x+30, y, arrow=tk.LAST, fill = PeriodicTable.equationCol, width = 5)]
         elif self.parent.eqmode == 'equilibrium':
-            self.parent.old_eq_objs = [self.create_line(x-30, y-6, x+30, y-6, x+24, y-12, x+24, y-6, fill = 'dark green', width = 5, joinstyle=tk.MITER), self.create_line(x-24, y+6, x-24, y+12, x-30, y+6, x+30,y+6, fill = 'dark green', width = 5, joinstyle=tk.MITER)]
+            self.parent.old_eq_objs = [self.create_line(x-30, y-6, x+30, y-6, x+24, y-12, x+24, y-6, fill = PeriodicTable.equationCol, width = 5, joinstyle=tk.MITER), self.create_line(x-24, y+6, x-24, y+12, x-30, y+6, x+30,y+6, fill = PeriodicTable.equationCol, width = 5, joinstyle=tk.MITER)]
 
     def moveeq(self, e):
-        x, y = myround(e.x, 60), myround(e.y, 60)
+        x, y = myround(e.x, 30), myround(e.y, 30)
         if self.parent.old_eq_coords != (x, y):
             self.parent.old_eq_coords = (x, y)
             for i in self.parent.old_eq_objs:
                 self.delete(i)
             if self.parent.eqmode == '+':
-                self.parent.old_eq_objs = [self.create_text(x, y-1, text='+', font=('Helvetica','30','bold'), fill='dark green', justify=tk.CENTER)]
+                self.parent.old_eq_objs = [self.create_text(x, y-1, text='+', font=('Helvetica','30','bold'), fill=PeriodicTable.equationCol, justify=tk.CENTER)]
             elif self.parent.eqmode == 'forward':
-                self.parent.old_eq_objs = [self.create_line(x-30, y, x+30, y, arrow=tk.LAST, fill = 'dark green', width = 5)]
+                self.parent.old_eq_objs = [self.create_line(x-30, y, x+30, y, arrow=tk.LAST, fill = PeriodicTable.equationCol, width = 5)]
             elif self.parent.eqmode == 'equilibrium':
-                self.parent.old_eq_objs = [self.create_line(x-30, y-6, x+30, y-6, x+24, y-12, x+24, y-6, fill = 'dark green', width = 5, joinstyle=tk.MITER), self.create_line(x-24, y+6, x-24, y+12, x-30, y+6, x+30,y+6, fill = 'dark green', width = 5, joinstyle=tk.MITER)]
+                self.parent.old_eq_objs = [self.create_line(x-30, y-6, x+30, y-6, x+24, y-12, x+24, y-6, fill = PeriodicTable.equationCol, width = 5, joinstyle=tk.MITER), self.create_line(x-24, y+6, x-24, y+12, x-30, y+6, x+30,y+6, fill = PeriodicTable.equationCol, width = 5, joinstyle=tk.MITER)]
 
     def fix_eq(self, e):
-        x, y = myround(e.x, 60), myround(e.y, 60)
+        x, y = myround(e.x, 30), myround(e.y, 30)
         for i in self.parent.old_eq_objs:
             self.delete(i)
         if self.parent.eqmode == '+':
-            self.create_text(x, y-1, text='+', font=('Helvetica','30','bold'), fill='dark green', justify=tk.CENTER, tags=f"1 dark\ green + {x} {y}")
+            self.create_text(x, y-1, text='+', font=('Helvetica','30','bold'), fill=PeriodicTable.equationCol, justify=tk.CENTER, tags=f"1 dark\ green + {x} {y}")
         elif self.parent.eqmode == 'forward':
-            self.create_line(x-30, y, x+30, y, arrow=tk.LAST, fill = 'dark green', width = 5, tags=f"[0, 1, ({x}, {y})]")
+            self.create_line(x-30, y, x+30, y, arrow=tk.LAST, fill = PeriodicTable.equationCol, width = 5, tags=f"[0, 1, ({x}, {y})]")
         elif self.parent.eqmode == 'equilibrium':
-            self.create_line(x-30, y-6, x+30, y-6, x+24, y-12, x+24, y-6, fill = 'dark green', width = 5, joinstyle=tk.MITER, tags=f"0 2 {x} {y}")
-            self.create_line(x-24, y+6, x-24, y+12, x-30, y+6, x+30,y+6, fill = 'dark green', width = 5, joinstyle=tk.MITER)
+            self.create_line(x-30, y-6, x+30, y-6, x+24, y-12, x+24, y-6, fill = PeriodicTable.equationCol, width = 5, joinstyle=tk.MITER, tags=f"0 2 {x} {y}")
+            self.create_line(x-24, y+6, x-24, y+12, x-30, y+6, x+30,y+6, fill = PeriodicTable.equationCol, width = 5, joinstyle=tk.MITER)
         self.parent.eqobcount += 1
 
     def make_line(self, e):
@@ -129,3 +130,8 @@ class genCanvas(tk.Canvas):
     
     def getParent(self):
         return self.parent
+    
+    def clearAll(self):
+        check = tk.messagebox.askquestion('Clear Canvas', 'Are you sure you want to clear the canvas?', icon='warning')
+        if check == 'yes':
+            self.delete('all')

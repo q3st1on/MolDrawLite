@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from src.atomDicts import PeriodicTable
 
 class sideMenu(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -51,76 +52,115 @@ class sideMenu(tk.Frame):
         self.hydrogen = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
         self.hydrogen.pack(side=tk.TOP, pady=(5, 0))
         self.hydrogen.bind('<Button-1>', (lambda _: self.parent.setAtom(1)))
-        self.hydrogen.create_text(12, 15, text='H', font=('Helvetica','18','bold'), fill = 'gray45')
+        self.hydrogenS = self.hydrogen.create_text(12, 15, text='H', font=('Helvetica','18','bold'), fill = PeriodicTable.atomNo(1).colour, tags='atom')
 
         self.carbon = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg = 'gray')
         self.carbon.pack(side=tk.TOP)
         self.carbon.bind('<Button-1>', (lambda _: self.parent.setAtom(6)))
-        self.carbon.create_text(12, 15, text='C', font=('Helvetica','18','bold'), fill = 'gray11')
+        self.carbonS = self.carbon.create_text(12, 15, text='C', font=('Helvetica','18','bold'), fill = PeriodicTable.atomNo(6).colour, tags='atom')
 
         self.nitrogen = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
         self.nitrogen.pack(side=tk.TOP)
         self.nitrogen.bind('<Button-1>', (lambda _: self.parent.setAtom(7)))
-        self.nitrogen.create_text(12, 15, text='N', font=('Helvetica','18','bold'), fill = 'deep sky blue')
+        self.nitrogenS = self.nitrogen.create_text(12, 15, text='N', font=('Helvetica','18','bold'), fill = PeriodicTable.atomNo(7).colour, tags='atom')
 
         self.oxygen = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
         self.oxygen.pack(side=tk.TOP)
         self.oxygen.bind('<Button-1>', (lambda _: self.parent.setAtom(8)))
-        self.oxygen.create_text(12, 15, text='O', font=('Helvetica','18','bold'), fill = 'red2')
+        self.oxygenS = self.oxygen.create_text(12, 15, text='O', font=('Helvetica','18','bold'), fill = PeriodicTable.atomNo(8).colour, tags='atom')
+
+        self.R = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
+        self.R.pack(side=tk.TOP)
+        self.R.bind('<Button-1>', (lambda _: self.parent.setAtom(0)))
+        self.RS = self.R.create_text(12, 15, text='R', font=('Helvetica','18','bold'), fill = PeriodicTable.atomNo(0).colour, tags='atom')
+
+        self.menu = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
+        self.menu.pack(side=tk.TOP)
+        self.menu.bind('<Button-1>', (lambda _: self.parent.createTable('picker')))
+        self.menu.create_text(12, 15, text='#', font=('Helvetica','18','bold'), fill = 'black', tags='atom')
 
         self.elementFrame = tk.Frame(self, width=20, height=20)
         self.elementFrame.pack(side=tk.TOP, pady = (0, 5))
-        self.element = tk.Label(self.elementFrame, textvariable=self.parent.getElement())
+        self.element = tk.Label(self.elementFrame, textvariable=self.parent.element)
         self.element.pack()
 
         ttk.Separator(self, orient='horizontal').pack(fill = 'x')
 
         self.ep = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
         self.ep.pack(side = tk.TOP, pady=(5, 0))
-        self.ep.create_text(12, 12, text='+', font=('Helvetica','18','bold'), fill = 'dark green')
+        self.ep.create_text(12, 12, text='+', font=('Helvetica','18','bold'), fill = PeriodicTable.equationCol)
         self.ep.bind('<Button-1>', lambda _: self.parent.setSymbol('+'))
 
         self.ef = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
         self.ef.pack(side = tk.TOP)
-        self.ef.create_line(4,12,20,12, width=2, arrow=tk.LAST, fill='dark green')
+        self.ef.create_line(4,12,20,12, width=2, arrow=tk.LAST, fill=PeriodicTable.equationCol)
         self.ef.bind('<Button-1>', lambda _: self.parent.setSymbol('forward'))
 
         self.ee = tk.Canvas(self, relief=tk.RAISED, bd=1, width=20, height=20, bg='light gray')
         self.ee.pack(side = tk.TOP, pady=(0, 5))
-        self.ee.create_line(4,10,20,10, 18, 8, width=2, fill = 'dark green', joinstyle=tk.MITER)
-        self.ee.create_line(6, 15, 4,13,20,13, width=2, fill = 'dark green', joinstyle=tk.MITER)
+        self.ee.create_line(4,10,20,10, 18, 8, width=2, fill = PeriodicTable.equationCol, joinstyle=tk.MITER)
+        self.ee.create_line(6, 15, 4,13,20,13, width=2, fill = PeriodicTable.equationCol, joinstyle=tk.MITER)
         self.ee.bind('<Button-1>', lambda _: self.parent.setSymbol('equilibrium'))
 
         ttk.Separator(self, orient='horizontal').pack(fill = 'x')
 
 
     def updateElemHighlight(self, elem):
-        elem = int(elem)
         match elem:
+            case 0:
+                self.R.configure(bg='gray')
+                self.hydrogen.configure(bg='light gray')
+                self.carbon.configure(bg='light gray')
+                self.nitrogen.configure(bg='light gray')
+                self.oxygen.configure(bg='light gray')
             case 1:
+                self.R.configure(bg='light gray')
                 self.hydrogen.configure(bg='gray')
                 self.carbon.configure(bg='light gray')
                 self.nitrogen.configure(bg='light gray')
                 self.oxygen.configure(bg='light gray')
             case 6:
+                self.R.configure(bg='light gray')
                 self.hydrogen.configure(bg='light gray')
                 self.carbon.configure(bg='gray')
                 self.nitrogen.configure(bg='light gray')
                 self.oxygen.configure(bg='light gray')
             case 7:
+                self.R.configure(bg='light gray')
                 self.hydrogen.configure(bg='light gray')
                 self.carbon.configure(bg='light gray')
                 self.nitrogen.configure(bg='gray')
                 self.oxygen.configure(bg='light gray')
             case 8:
+                self.R.configure(bg='light gray')
                 self.hydrogen.configure(bg='light gray')
                 self.carbon.configure(bg='light gray')
                 self.nitrogen.configure(bg='light gray')
                 self.oxygen.configure(bg='gray')
             case _:
                 self.deacElem()
+    
+    def updateElemButtons(self, elem):
+        match elem:
+            case 0:
+                self.R.itemconfig(self.RS, fill=PeriodicTable.atomNo(0).colour)
+            case 1:
+                self.hydrogen.itemconfig(self.hydrogenS, fill=PeriodicTable.atomNo(1).colour)
+            case 6:
+                self.carbon.itemconfig(self.carbonS, fill=PeriodicTable.atomNo(6).colour)
+            case 7:
+                self.nitrogen.itemconfig(self.nitrogenS, fill=PeriodicTable.atomNo(7).colour)
+            case 8:
+                self.oxygen.itemconfig(self.oxygenS, fill=PeriodicTable.atomNo(8).colour)
+
+    def updateEqButtons(self):
+        self.ep.itemconfig('all', fill = PeriodicTable.equationCol)
+        self.ef.itemconfig('all', fill = PeriodicTable.equationCol)
+        self.ee.itemconfig('all', fill = PeriodicTable.equationCol)
+
 
     def deacElem(self):
+        self.R.configure(bg='light gray')
         self.hydrogen.configure(bg='light gray')
         self.carbon.configure(bg='light gray')
         self.nitrogen.configure(bg='light gray')

@@ -21,9 +21,7 @@ class imageWindow(tk.Toplevel):
         self.optionFrame.pack(side=tk.BOTTOM, padx=8, pady=(4, 8), ipadx=5, ipady=5, fill=tk.X)
 
     def makeImage(self):
-        self.imageFrame.test(self.xVal, self.yVal)
-        time.sleep(60)
-        self.imageFrame.saveImage()
+        self.imageFrame.saveImage(self.xVal, self.yVal)
         self.imageFrame.pack_forget()
         del self.imageFrame
         self.destroy()
@@ -106,12 +104,9 @@ class imageCanvas(tk.Canvas):
     def addText(self, txt, colour, x, y):
         print(f"{x}, {y}")
         self.create_text(x, y, text=txt, font=('Helvetica','18','bold'), fill=colour, justify=tk.CENTER)
-    
-    def test(self, width, height):
-        self.postscript(file = 'temp.eps', colormode='color', pagewidth=width, pageheight=height) 
-    # def saveImage(self, width, height):
-        # self.postscript(file = 'temp.eps', colormode='color', pagewidth=width, pageheight=height) 
+
     def saveImage(self):
+        self.postscript(file = 'temp.eps', colormode='color', pagewidth=width, pageheight=height) 
         print('eps')
         img = Image.open('temp.eps') 
         ma, mi = img.size

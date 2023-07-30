@@ -20,6 +20,9 @@ class topMenu(tk.Frame):
         self.image = tk.Button(self, text="Save As Image", relief=tk.RAISED, bg='light gray', command= lambda: self.parent.genImage())
         self.image.pack(side = tk.LEFT, padx=2, pady=2, fill=tk.X)
 
+        self.colour = tk.Button(self, text="Change Colours", relief=tk.RAISED, bg='light gray', command= lambda: self.parent.createTable('colour'))
+        self.colour.pack(side = tk.LEFT, padx=2, pady=2, fill=tk.X)
+
         self.clear = tk.Button(self, text="Clear", relief=tk.RAISED, command= lambda: self.parent.clear())
         self.clear.pack(side=tk.RIGHT, padx=2, pady=2, fill=tk.X)
 

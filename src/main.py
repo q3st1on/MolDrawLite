@@ -72,32 +72,35 @@ class MolDrawLite(App):
         self._topBar.updateMode(mode)
 
     def mouseDown(self, e):
-        if self._mode == 'bond':
-            self._canvas.makeLine(e)
-        elif self._mode == 'atom':
-            self._canvas.makeLetter(e)
-        elif self._mode == 'equation':
-            self._canvas.makeEq(e)
-        elif self._mode == 'delete':
-            self._canvas.delete("current")
+        match self._mode:
+            case 'bond':
+                self._canvas.makeLine(e)
+            case 'atom':
+                self._canvas.makeLetter(e)
+            case 'equation':
+                self._canvas.makeEq(e)
+            case 'delete':
+                self._canvas.delete("current")
 
     def mouseMove(self, e):
-        if self._mode == 'bond':
-            self._canvas.drawLine(e)
-        elif self._mode == 'atom':
-            self._canvas.moveLetter(e)
-        elif self._mode == 'equation':
-            self._canvas.moveEq(e)
-        elif self._mode == 'delete':
-            self._canvas.delete("current")
+        match self._mode:
+            case 'bond':
+                self._canvas.drawLine(e)
+            case 'atom':
+                self._canvas.moveLetter(e)
+            case 'equation':
+                self._canvas.moveEq(e)
+            case 'delete':
+                self._canvas.delete("current")
 
     def mouseUp(self, e):
-        if self._mode == 'bond':
-            self._canvas.fixLine(e)
-        elif self._mode == 'atom':
-            self._canvas.fixLetter(e)
-        elif self._mode == 'equation':
-            self._canvas.fixEq(e)
+        match self._mode:
+            case 'bond':
+                self._canvas.fixLine(e)
+            case 'atom':
+                self._canvas.fixLetter(e)
+            case 'equation':
+                self._canvas.fixEq(e)
 
     def keyDown(self, e):
         match e.keysym:

@@ -23,14 +23,17 @@ class createCFG(tk.Toplevel):
         self.bind("<KeyPress>", lambda x: self.keydown(x))
 
     def keydown(self, e):
-        if self.current=="shift+b" & self.shift:
+        if (self.current=="shift+b") & (self.shift):
+            if 
             self.textVar.set("Please press and hold the shift key for the rest of this keymapping")
         else:
+            if self.current == "=":
             if self.needed[self.current] == 'keycode':
                 self.cfg[self.current] = e.keycode
             elif self.needed[self.current] == 'keysym_num':
                 self.cfg[self.current] == e.keysym_num
-            elif self.current!="+"
+            
+            if self.current!="+":
                 self.i = self.i+1
                 self.current = self.keys[self.i]
                 self.textVar.set("Please press key: "+str(self.current))

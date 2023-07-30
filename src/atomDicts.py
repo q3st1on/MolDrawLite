@@ -48,6 +48,3 @@ class PeriodicTableClass:
     def __iter__(self):
         for i in self._table.values():
             yield i
-
-
-PeriodicTable = PeriodicTableClass()

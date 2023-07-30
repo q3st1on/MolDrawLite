@@ -1,23 +1,23 @@
+from src.classes import TopLevel, Canvas, Frame
 from PIL import Image, ImageChops
 import tkinter as tk
 import time
 import os
 
-class imageWindow(tk.Toplevel):
+class ImageWindow(TopLevel):
     def __init__(self, parent, info, *args, **kwargs):
-        tk.Toplevel.__init__(self, parent, *args, **kwargs)
-        self.parent = parent
+        super().__init__(parent, *args, **kwargs)
         self.geometry('1280x720')
         self.title('Image Generator')
 
         self.xVal = tk.DoubleVar(value='2000')
         self.yVal = tk.DoubleVar(value='2000')
 
-        self.imageFrame = imageCanvas(self,  bd=1, relief=tk.RAISED)
+        self.imageFrame = ImageCanvas(self,  bd=1, relief=tk.RAISED)
         self.imageFrame.pack(side = tk.TOP, fill=tk.BOTH, padx = 8, pady = (8, 4), expand=True)
         self.imageFrame.addObjs(info)  
 
-        self.optionFrame = optionFrame(self, bd=1, relief=tk.RAISED)
+        self.optionFrame = OptionFrame(self, bd=1, relief=tk.RAISED)
         self.optionFrame.pack(side=tk.BOTTOM, padx=8, pady=(4, 8), ipadx=5, ipady=5, fill=tk.X)
 
     def makeImage(self):
@@ -26,9 +26,6 @@ class imageWindow(tk.Toplevel):
         del self.imageFrame
         self.destroy()
     
-    def getParent(self):
-        return self.parent
-    
     def getY(self):
         return self.yVal
     
@@ -36,46 +33,37 @@ class imageWindow(tk.Toplevel):
         return self.xVal
 
 
-class pixelFrame(tk.Frame):
+class PixelFrame(Frame):
     def __init__(self, parent, *args, **kwargs):
-        tk.Frame.__init__(self, parent, *args, **kwargs)
-        self.parent = parent
+        super().__init__(parent, *args, **kwargs)
 
         tk.Label(self, text="Image Format", font=('Helvetica', '11','bold')).pack(side=tk.LEFT)
         tk.Label(self, text="x: ", font=('Helvetica', '11')).pack(side=tk.LEFT)
         
-        self.xInput = tk.Spinbox(self, textvariable=self.parent.getParent().getX())
+        self.xInput = tk.Spinbox(self, textvariable=self._parent.getParent().getX())
         self.xInput.pack(side=tk.LEFT)
 
         tk.Label(self, text="y: ", font=('Helvetica', '11')).pack(side=tk.LEFT)
 
-        self.yInput = tk.Spinbox(self, textvariable=self.parent.getParent().getY())
+        self.yInput = tk.Spinbox(self, textvariable=self._parent.getParent().getY())
         self.yInput.pack(side=tk.LEFT)
-    
-    def getParent(self):
-        return self.parent
 
 
-class optionFrame(tk.Frame):
+class OptionFrame(Frame):
     def __init__(self, parent, *args, **kwargs):
-        tk.Frame.__init__(self, parent, *args, **kwargs)
-        self.parent = parent
+        super().__init__(parent, *args, **kwargs)
 
-        self.pixelMenu = pixelFrame(self, bd=1, relief=tk.RAISED)
+        self.pixelMenu = PixelFrame(self, bd=1, relief=tk.RAISED)
         self.pixelMenu.pack(side = tk.LEFT, padx = (8, 4), pady=8, fill=tk.X)
 
-        self.button = tk.Button(self, text="Save Image", relief=tk.RAISED, bg='gray', command= lambda: self.parent.makeImage())
+        self.button = tk.Button(self, text="Save Image", relief=tk.RAISED, bg='gray', command= lambda: self._parent.makeImage())
         self.button.pack(side=tk.BOTTOM, padx=(4, 8), pady=8, fill=tk.X)
-    
-    def getParent(self):
-        return self.parent
 
 
-class imageCanvas(tk.Canvas):
+class ImageCanvas(Canvas):
     def __init__(self, parent, *args, **kwargs):
-        tk.Canvas.__init__(self, parent, *args, **kwargs)
-        self.parent = parent
-
+        super().__init__(parent, *args, **kwargs)
+        
     def addObjs(self, info):
         for obj in info:
             if int(obj[0]) == 0:
@@ -120,6 +108,3 @@ class imageCanvas(tk.Canvas):
             img = img.crop(trimb)
             img.show()
         os.remove('temp.eps')
-    
-    def getParent(self):
-        return self.parent

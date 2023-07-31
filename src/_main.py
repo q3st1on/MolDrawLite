@@ -103,7 +103,6 @@ class MolDrawLite(App):
                 self._canvas.fixEq(e)
 
     def keyDown(self, e):
-        print(e.keysym)
         match e.keysym:
             case "B":
                 self.setMode('bond')

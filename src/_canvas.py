@@ -1,4 +1,4 @@
-from src._util import nearRound, closestNode
+from src._util import nearRound, closestNode, offsets
 from src._classes import LiveCanvas
 import tkinter as tk
 import math
@@ -18,7 +18,7 @@ class GenCanvas(LiveCanvas):
         else:
             self._oldLetterCoords = rx,ry
         x,y = self._oldLetterCoords
-        self._oldLetter = self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER)
+        self._oldLetter = self.create_text(x+offsets.x, y+offsets.y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER)
 
     def moveLetter(self, e):
         x, y = e.x, e.y
@@ -31,12 +31,12 @@ class GenCanvas(LiveCanvas):
                 self._oldLetterCoords = rx,ry
             self.delete(self._oldLetter)
         x,y = self._oldLetterCoords
-        self._oldLetter = self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER)
+        self._oldLetter = self.create_text(x+offsets.x, y+offsets.y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER)
 
     def fixLetter(self, e):
         x, y = self._oldLetterCoords
         self.delete(self._oldLetter)
-        self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER, tags=f"1 {self._parent.getElement().colour} {self._parent.getElement().symbol} {x} {y}")
+        self.create_text(x+offsets.x, y+offsets.y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER, tags=f"1 {self._parent.getElement().colour} {self._parent.getElement().symbol} {x} {y}")
         self._atomCenters.append((x,y))
         if self._oldLetterCoords in self._bondEndsOpen:
             self._bondEndsOpen.remove(self._oldLetterCoords)

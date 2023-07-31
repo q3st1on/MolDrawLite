@@ -103,6 +103,7 @@ class MolDrawLite(App):
                 self._canvas.fixEq(e)
 
     def keyDown(self, e):
+        print(e.keysym)
         match e.keysym:
             case "B":
                 self.setMode('bond')
@@ -162,11 +163,11 @@ class MolDrawLite(App):
                                 
                     case 'equation':
                         match e.keysym:
-                            case '+':
+                            case 'plus':
                                 self.setSymbol('+')
-                            case '=':
+                            case 'equal':
                                 self.setSymbol('equilibrium')
-                            case '>':
+                            case 'greater':
                                 self.setSymbol('forward')
                             case _:
                                 pass
@@ -193,6 +194,7 @@ class MolDrawLite(App):
     
     def createTable(self, mode):
         self.tablewin = TableWindow(self, mode)
+        print(self._arch)
         if self._arch == 'Linux':
             self.tablewin.attributes('-type', 'dialog')
         self.tablewin.attributes('-topmost', True)

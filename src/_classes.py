@@ -97,7 +97,7 @@ class App(tk.Tk):
         self._bondNo = 1
         self._eqMode = '+'
         self._keyBuff = ""    
-        self._arch = platform.release()
+        self._arch = platform.system()
             
     def periodicTable(self):
         return self._PeriodicTable

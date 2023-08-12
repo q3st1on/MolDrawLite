@@ -55,19 +55,19 @@ class LiveCanvas(Canvas):
     def __init__(self, parent, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
         self._baseCoords: tuple[int | float, int | float]
-        self._oldLine: int
+        self._oldLine: int = 0
 
         self._arcBaseCoords: tuple[int | float, int | float]
-        self._oldArc: int
+        self._oldArc: int = 0
 
         self._oldLetterCoords: tuple[int | float, int | float]
-        self._oldLetter: int
+        self._oldLetter: int = 0
 
         self._atomCenters: list[tuple[int | float, int | float], ...] = []
         self._bondEndsOpen: list[tuple[int | float, int | float], ...] = []
 
         self._oldEqCoords: tuple[int | float, int | float]
-        self._oldEqObjs: list[int]
+        self._oldEqObjs: list[int] 
 
         self._bondCount: int = 0
         self._atomCount: int = 0

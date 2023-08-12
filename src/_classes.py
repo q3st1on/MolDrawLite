@@ -26,10 +26,10 @@ class Canvas(tk.Canvas):
     def periodicTable(self) -> PeriodicTableClass:
         return self._PeriodicTable
     
-    def drawArc(self, coords: tuple[int, int], r: int, angles: tuple[int, int], width: int):
+    def drawArc(self, coords: tuple[int, int], r: int, angles: tuple[int, int], width: int, tag: str):
         x,y = coords
         t0, t1 = angles
-        return self.create_arc(x-(r//2), y-r, x+(r//2), y+r, start=t0, extent=t1, style='arc', width=width)
+        return self.create_arc(x-(r//2), y-r, x+(r//2), y+r, start=t0, extent=t1, style='arc', width=width, tags=tag)
 
 class ButtonCanvas(Canvas):
     def __init__(self, parent, *args, **kwargs) -> None:

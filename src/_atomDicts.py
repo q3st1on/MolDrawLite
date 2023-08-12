@@ -48,4 +48,4 @@ class PeriodicTableClass:
     
     def __iter__(self) -> Iterator[str]:
         for i in self._table.values():
-            yield
+            yield i

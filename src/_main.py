@@ -11,6 +11,7 @@ import tkinter as tk
 import time
 import json
 import os
+from PIL import Image, ImageChops, ImageDraw
 
 class MolDrawLite(App):
     def __init__(self, *args, **kwargs) -> None:
@@ -211,16 +212,31 @@ class MolDrawLite(App):
         self._sideBar.updateElemHighlight(self.element())
     
     def genImage(self) -> None:
-        info = [self._canvas.gettags(i) for i in self._canvas.find_all()]
-        if len(info) == 0:
-            tkinter.messagebox.showwarning("Empty Canvas!", "Empty Canvas!")
-        else:
-            self.imagePopUp = ImageWindow(self, info)
-            self.imagePopUp.mainloop()
+        self.imageSaveTest()
+        # info = [self._canvas.gettags(i) for i in self._canvas.find_all()]
+        # if len(info) == 0:
+        #     tkinter.messagebox.showwarning("Empty Canvas!", "Empty Canvas!")
+        # else:
+        #     self.imagePopUp = ImageWindow(self, info)
+        #     self.imagePopUp.mainloop()
+    
+    def imageSaveTest(self) -> None:
+        pwd = os.path.dirname(os.path.realpath(__file__))
+        self._canvas.postscript(file = pwd+'\\temp.eps', colormode='color', pagewidth=2000, pageheight=2000) 
+        img = Image.open(pwd+'\\temp.eps') 
+        ma, mi = img.size
+        bg = Image.new(img.mode, img.size, img.getpixel((0,0)))
+        diff = ImageChops.difference(img, bg)
+        diff = ImageChops.add(diff, diff, 2.0, -100)
+        bbox = diff.getbbox()
+        if bbox:
+            trimb = (max(bbox[0]-5, 0), max(bbox[1]-5, 0), min(bbox[2]+5, ma), min(bbox[3]+5, ma))
+            img = img.crop(trimb)
+            img.show()
+        os.remove(pwd+'\\temp.eps')
     
     def createTable(self, mode: str) -> None:
         self.tablewin = TableWindow(self, mode)
-        print(self._arch)
         if self._arch == 'Linux':
             self.tablewin.attributes('-type', 'dialog')
         self.tablewin.attributes('-topmost', True)

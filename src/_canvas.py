@@ -36,7 +36,7 @@ class GenCanvas(LiveCanvas):
     def fixLetter(self, e: tk.Event) -> None:
         x, y = self._oldLetterCoords
         self.delete(self._oldLetter)
-        self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER, tags=f"1 {self._parent.getElement().colour} {self._parent.getElement().symbol} {x} {y}")
+        self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER, tags=f"1 {self._parent.getElement().colour.replace(' ', '_')} {self._parent.getElement().symbol} {x} {y}")
         self._atomCenters.append((x,y))
         if self._oldLetterCoords in self._bondEndsOpen:
             self._bondEndsOpen.remove(self._oldLetterCoords)
@@ -70,7 +70,7 @@ class GenCanvas(LiveCanvas):
         for i in self._oldEqObjs:
             self.delete(i)
         if self._parent.eqMode() == '+':
-            self.create_text(x, y, text='+', font=('Helvetica','20','bold'), fill=self._PeriodicTable.equationCol, justify=tk.CENTER, tags=f"1 {self._PeriodicTable.equationCol} + {x} {y}")
+            self.create_text(x, y, text='+', font=('Helvetica','20','bold'), fill=self._PeriodicTable.equationCol, justify=tk.CENTER, tags=f"1 {self._PeriodicTable.equationCol.replace(' ', '_')} + {x} {y}")
         elif self._parent.eqMode() == 'forward':
             self.create_line(x-30, y, x+30, y, arrow=tk.LAST, fill = self._PeriodicTable.equationCol, width = 3, tags=f"[0, 1, ({x}, {y})]")
         elif self._parent.eqMode() == 'equilibrium':
@@ -133,15 +133,33 @@ class GenCanvas(LiveCanvas):
             self._arcBaseCoords = closestNode((x,y), self._atomCenters)
         else:
             self._arcBaseCoords = x,y
+        if self._parent._arcSide == 'right':
+            self._oldArc = self.drawArc(self._arcBaseCoords, 60, (310, 100), 2, "")
+        elif self._parent._arcSide == 'left':
+            self._oldArc = self.drawArc(self._arcBaseCoords, 60, (130, 100), 2, "")
     
     def moveBrack(self, e: tk.Event) -> None:
-        if self._parent._arcSide == 'right':
-            self.drawArc(self._arcBaseCoords, 60, (310, 100), 2)
-        elif self._parent._arcSide == 'left':
-            self.drawArc(self._arcBaseCoords, 60, (130, 100), 2)
+        newCoords = closestNode((e.x,e.y), self._atomCenters)
+        if newCoords != self._arcBaseCoords:
+            self._arcBaseCoords = newCoords
+            self.delete(self._oldArc)
+            if self._parent._arcSide == 'right':
+                self._oldArc = self.drawArc(self._arcBaseCoords, 60, (310, 100), 2, "")
+            elif self._parent._arcSide == 'left':
+                self._oldArc = self.drawArc(self._arcBaseCoords, 60, (130, 100), 2, "")
         
     def fixBrack(self, e: tk.Event) -> None:
-        pass
+        newCoords = closestNode((e.x,e.y), self._atomCenters)
+        if newCoords != self._arcBaseCoords:
+            self._arcBaseCoords = newCoords
+        
+        self.delete(self._oldArc)
+        if self._parent._arcSide == 'right':
+            self.drawArc(self._arcBaseCoords, 60, (310, 100), 2, f"2 1 {self._arcBaseCoords[0]} {self._arcBaseCoords[0]}")
+            self.create_text(self._arcBaseCoords[0]+25, self._arcBaseCoords[1]+50, text="n", font=('Helvetica','11','bold'), fill="black", justify=tk.CENTER)
+        elif self._parent._arcSide == 'left':
+            self.drawArc(self._arcBaseCoords, 60, (130, 100), 2, f"2 0 {self._arcBaseCoords[0]} {self._arcBaseCoords[0]}")
+        
         
     def clearAll(self) -> None:
         check = tk.messagebox.askquestion('Clear Canvas', 'Are you sure you want to clear the canvas?', icon='warning')

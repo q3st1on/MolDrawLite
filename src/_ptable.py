@@ -70,14 +70,23 @@ class ElementBox(Frame):
     
     def drawElement(self) -> None:
         self.topBar = tk.Frame(self, width=50)
+        self.topBar.bind("<ButtonRelease-1>", self.mouseDown)
         self.topBar.pack(side=tk.TOP, pady=(2,0))
+        
         self.dispAnum = tk.Label(self.topBar, textvariable=self.vAnum, font=('Helvetica','7','bold'))
+        self.dispAnum.bind("<ButtonRelease-1>", self.mouseDown)
         self.dispAnum.pack(side=tk.LEFT)
+        
         self.dispMass = tk.Label(self.topBar, textvariable=self.vMass, font=('Helvetica','7','bold'))
+        self.dispMass.bind("<ButtonRelease-1>", self.mouseDown)
         self.dispMass.pack(side=tk.RIGHT)
+        
         self.dispName = tk.Label(self, textvariable=self.vName, font=('Helvetica','6','bold'))
+        self.dispName.bind("<ButtonRelease-1>", self.mouseDown)
         self.dispName.pack(side=tk.BOTTOM, pady=(0,2))
+        
         self.dispSym = tk.Label(self, textvariable=self.vSymbol, font=('Helvetica','11','bold'), fg=self._PeriodicTable.atomNo(self.element).colour)
+        self.dispSym.bind("<ButtonRelease-1>", self.mouseDown)
         self.dispSym.pack(anchor=tk.CENTER)
     
     def mouseDown(self, e: tk.Event) -> None:

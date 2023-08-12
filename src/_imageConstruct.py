@@ -66,11 +66,12 @@ class ImageCanvas(Canvas):
         
     def addObjs(self, info) -> None:
         for obj in info:
-            print(obj)
             if int(obj[0]) == 0:
                 self.addLine(obj)
             elif int(obj[0]) == 1:
-                self.addText(obj[2], obj[1], float(obj[3]), float(obj[4]))
+                self.addText(obj[2], obj[1].replace('_', ' '), float(obj[3]), float(obj[4]))
+            elif int(obj[0]) == 2:
+                self.addBrackets(int(obj[1]), int(obj[2]), int(obj[3]))
 
     def addLine(self, obj) -> None:
         if int(obj[1]) == 0:
@@ -93,6 +94,12 @@ class ImageCanvas(Canvas):
     def addText(self, txt: str, colour: str, x: float | int, y: float | int) -> None:
         self.create_text(x, y, text=txt, font=('Helvetica','18','bold'), fill=colour, justify=tk.CENTER)
 
+    def addBrackets(self, type: int, x: float | int, y: float | int) -> None:
+        if type == 1:
+            self.drawArc((x, y), 60, (310, 100), 2, "")
+        elif type == 0:
+            self.drawArc((x, y), 60, (130, 100), 2, "")
+        
     def saveImage(self, width, height) -> None:
         pwd = os.path.dirname(os.path.realpath(__file__))
         self.postscript(file = pwd+'\\temp.eps', colormode='color', pagewidth=width, pageheight=height) 

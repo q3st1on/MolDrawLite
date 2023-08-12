@@ -3,7 +3,7 @@ from tkinter import ttk
 from src._classes import Frame, ButtonCanvas
 
 class SideMenu(Frame):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
 
         self.mb = ButtonCanvas(self, relief=tk.RAISED, bd=1, width=21, height=21, bg='light gray')
@@ -111,7 +111,7 @@ class SideMenu(Frame):
         ttk.Separator(self, orient='horizontal').pack(fill = 'x')
 
 
-    def updateElemHighlight(self, elem):
+    def updateElemHighlight(self, elem: int) -> None:
         match elem:
             case 0:
                 self.R.configure(bg='gray')
@@ -146,7 +146,7 @@ class SideMenu(Frame):
             case _:
                 self.deacElem()
     
-    def updateElemButtons(self, elem):
+    def updateElemButtons(self, elem: int) -> None:
         match elem:
             case 0:
                 self.R.itemconfig(self.RS, fill=self._PeriodicTable.atomNo(0).colour)
@@ -159,20 +159,20 @@ class SideMenu(Frame):
             case 8:
                 self.oxygen.itemconfig(self.oxygenS, fill=self._PeriodicTable.atomNo(8).colour)
 
-    def updateEqButtons(self):
+    def updateEqButtons(self) -> None:
         self.ep.itemconfig('all', fill = self._PeriodicTable.equationCol)
         self.ef.itemconfig('all', fill = self._PeriodicTable.equationCol)
         self.ee.itemconfig('all', fill = self._PeriodicTable.equationCol)
 
 
-    def deacElem(self):
+    def deacElem(self) -> None:
         self.R.configure(bg='light gray')
         self.hydrogen.configure(bg='light gray')
         self.carbon.configure(bg='light gray')
         self.nitrogen.configure(bg='light gray')
         self.oxygen.configure(bg='light gray')
 
-    def updateSymbol(self, x):
+    def updateSymbol(self, x: str) -> None:
         match x:
             case '+':
                 self.ep.configure(bg='gray')
@@ -189,12 +189,12 @@ class SideMenu(Frame):
             case _:
                 pass
     
-    def deacSymbol(self):
+    def deacSymbol(self) -> None:
         self.ep.configure(bg='light gray')
         self.ef.configure(bg='light gray')
         self.ee.configure(bg='light gray')
 
-    def updateBond(self, num):
+    def updateBond(self, num: int) -> None:
         match num:
             case 1:
                 self.mb.configure(bg='gray')
@@ -229,7 +229,7 @@ class SideMenu(Frame):
             case _:
                 pass
 
-    def deacBond(self):
+    def deacBond(self) -> None:
         self.mb.configure(bg='light gray')
         self.eb.configure(bg='light gray')
         self.pb.configure(bg='light gray')

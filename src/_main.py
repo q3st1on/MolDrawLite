@@ -13,7 +13,7 @@ import json
 import os
 
 class MolDrawLite(App):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.title("MolDrawLite")
         self.resizable(height = None, width = None)
@@ -30,25 +30,28 @@ class MolDrawLite(App):
         
         self.bind("<KeyPress>", lambda x: self.keyDown(x))
 
-    def setBond(self, num):
+    def setBond(self, num: int) -> None:
         self._bondNo = num
         self.setMode('bond')
         self._sideBar.updateBond(num)
     
-    def setSymbol(self, sym):
+    def setPoly(self, side: str) -> None:
+        self._arcSide = side
+    
+    def setSymbol(self, sym: str) -> None:
         self._eqMode = sym
         self.setMode('equation')
         self._sideBar.updateSymbol(sym)
     
-    def setAtom(self, atom):
+    def setAtom(self, atom: str | int) -> None:
         self._element.set(atom)
         self.setMode('atom')
         self._sideBar.updateElemHighlight(self.element())
     
-    def setMode(self, mode):
+    def setMode(self, mode: str) -> None:
         self._mode = mode
         match mode:
-            case 'ss':
+            case 'polymer':
                 self._sideBar.deacBond()
                 self._sideBar.deacElem()
                 self._sideBar.deacSymbol()
@@ -71,7 +74,7 @@ class MolDrawLite(App):
 
         self._topBar.updateMode(mode)
 
-    def mouseDown(self, e):
+    def mouseDown(self, e: tk.Event) -> None:
         match self._mode:
             case 'bond':
                 self._canvas.makeLine(e)
@@ -79,10 +82,12 @@ class MolDrawLite(App):
                 self._canvas.makeLetter(e)
             case 'equation':
                 self._canvas.makeEq(e)
+            case 'polymer':
+                self._canvas.makeBrack(e)
             case 'delete':
                 self._canvas.delete("current")
 
-    def mouseMove(self, e):
+    def mouseMove(self, e: tk.Event) -> None:
         match self._mode:
             case 'bond':
                 self._canvas.drawLine(e)
@@ -90,10 +95,12 @@ class MolDrawLite(App):
                 self._canvas.moveLetter(e)
             case 'equation':
                 self._canvas.moveEq(e)
+            case 'polymer':
+                self._canvas.moveBrack(e)
             case 'delete':
                 self._canvas.delete("current")
 
-    def mouseUp(self, e):
+    def mouseUp(self, e: tk.Event) -> None:
         match self._mode:
             case 'bond':
                 self._canvas.fixLine(e)
@@ -101,8 +108,12 @@ class MolDrawLite(App):
                 self._canvas.fixLetter(e)
             case 'equation':
                 self._canvas.fixEq(e)
-
-    def keyDown(self, e):
+            case 'polymer':
+                self._canvas.fixBrack(e)
+            case 'delete':
+                self._canvas.delete("current")
+                
+    def keyDown(self, e: tk.Event) -> None:
         match e.keysym:
             case "B":
                 self.setMode('bond')
@@ -170,11 +181,27 @@ class MolDrawLite(App):
                                 self.setSymbol('forward')
                             case _:
                                 pass
-
+                    
+                    case 'polymer':
+                        match e.keysym:
+                            case 'bracketright':
+                                self.setPoly('right')
+                            case 'braceright':
+                                self.setPoly('right')
+                            case 'parenright':
+                                self.setPoly('right')
+                            case 'parenleft':
+                                self.setPoly('left')
+                            case 'braceleft':
+                                self.setPoly('left')
+                            case 'bracketleft':
+                                self.setPoly('left')
+                            case _:
+                                pass
                     case _:
                         pass
     
-    def atomInput(self):
+    def atomInput(self) -> None:
         anum = int(self._keyBuff)
         if anum in range(1, 119):
             self._element.set(anum)
@@ -183,7 +210,7 @@ class MolDrawLite(App):
         self._keyBuff = ""
         self._sideBar.updateElemHighlight(self.element())
     
-    def genImage(self):
+    def genImage(self) -> None:
         info = [self._canvas.gettags(i) for i in self._canvas.find_all()]
         if len(info) == 0:
             tkinter.messagebox.showwarning("Empty Canvas!", "Empty Canvas!")
@@ -191,18 +218,18 @@ class MolDrawLite(App):
             self.imagePopUp = ImageWindow(self, info)
             self.imagePopUp.mainloop()
     
-    def createTable(self, mode):
+    def createTable(self, mode: str) -> None:
         self.tablewin = TableWindow(self, mode)
         if self._arch == 'Linux':
             self.tablewin.attributes('-type', 'dialog')
         self.tablewin.attributes('-topmost', True)
         self.tablewin.mainloop()
 
-    def canvas(self):
+    def canvas(self) -> GenCanvas:
         return self._canvas
     
-    def sideBar(self):
+    def sideBar(self) -> SideMenu:
         return self._sideBar
     
-    def topBar(self):
+    def topBar(self) -> TopMenu:
         return self._topBar

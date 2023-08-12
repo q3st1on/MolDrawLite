@@ -3,7 +3,7 @@ from src._classes import TopLevel, Frame
 from tkinter.colorchooser import askcolor
 
 class TableWindow(TopLevel):
-    def __init__(self, parent, mode, *args, **kwargs):
+    def __init__(self, parent, mode: str, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
         self.mode = mode
         self.title('Periodic Table')
@@ -18,24 +18,24 @@ class TableWindow(TopLevel):
             self.close = tk.Button(self, text="Close", relief=tk.RAISED, bg='light gray', command= lambda: self.destroy())
             self.close.pack(side=tk.RIGHT, padx=2, pady=2, fill=tk.X)
 
-    def equationColourChange(self):
+    def equationColourChange(self) -> None:
         colour = askcolor(title="Tkinter Color Chooser")
         self._PeriodicTable.equationCol = colour[1]
         self.eqColour.configure(fg=colour[1])
         self._parent.sideBar().updateEqButtons()
     
-    def saveCol(self):
+    def saveCol(self) -> None:
         self._PeriodicTable.ptb.writeColours()
 
 class Table(Frame):
-    def __init__(self, parent, mode, *args, **kwargs):
+    def __init__(self, parent, mode: str, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
         self.mode=mode
         self.elements = []
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(0, weight=1)
     
-    def loadElements(self):
+    def loadElements(self) -> None:
         for elem in list(self._PeriodicTable):
             elembox = ElementBox(self, self.mode, bd=1, relief=tk.RAISED, width=50, height=50)
             elembox.pack_propagate(False)
@@ -51,7 +51,7 @@ class Table(Frame):
         padder.grid(row=7, column=1, padx=0.5, pady=0.5)
 
 class ElementBox(Frame):
-    def __init__(self, parent, mode, *args, **kwargs):
+    def __init__(self, parent, mode: str, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
         self.mode = mode
         self.vName = tk.StringVar()
@@ -60,7 +60,7 @@ class ElementBox(Frame):
         self.vAnum = tk.StringVar()
         self.bind('<ButtonRelease-1>', self.mouseDown)
 
-    def setElement(self, element):
+    def setElement(self, element: int) -> None:
         self.element = element
         self.vName.set(self._PeriodicTable.atomNo(self.element).name)
         self.vSymbol.set(self._PeriodicTable.atomNo(self.element).symbol)
@@ -68,7 +68,7 @@ class ElementBox(Frame):
         self.vMass.set(round(self._PeriodicTable.atomNo(self.element).mass,2))
         self.pos = self._PeriodicTable.atomNo(self.element).pos
     
-    def drawElement(self):
+    def drawElement(self) -> None:
         self.topBar = tk.Frame(self, width=50)
         self.topBar.pack(side=tk.TOP, pady=(2,0))
         self.dispAnum = tk.Label(self.topBar, textvariable=self.vAnum, font=('Helvetica','7','bold'))
@@ -80,7 +80,7 @@ class ElementBox(Frame):
         self.dispSym = tk.Label(self, textvariable=self.vSymbol, font=('Helvetica','11','bold'), fg=self._PeriodicTable.atomNo(self.element).colour)
         self.dispSym.pack(anchor=tk.CENTER)
     
-    def mouseDown(self, e):
+    def mouseDown(self, e: tk.Event) -> None:
         if self.mode == 'colour':
             colour = askcolor(title="Tkinter Color Chooser")
             self._PeriodicTable.atomNo(self.element).setColour(colour[1])

@@ -173,11 +173,11 @@ class MolDrawLite(App):
                                 
                     case 'equation':
                         match e.keysym:
-                            case '+':
+                            case 'plus':
                                 self.setSymbol('+')
-                            case '=':
+                            case 'equal':
                                 self.setSymbol('equilibrium')
-                            case '>':
+                            case 'greater':
                                 self.setSymbol('forward')
                             case _:
                                 pass
@@ -220,6 +220,7 @@ class MolDrawLite(App):
     
     def createTable(self, mode: str) -> None:
         self.tablewin = TableWindow(self, mode)
+        print(self._arch)
         if self._arch == 'Linux':
             self.tablewin.attributes('-type', 'dialog')
         self.tablewin.attributes('-topmost', True)

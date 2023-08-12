@@ -106,7 +106,7 @@ class App(tk.Tk):
         self._arcSide = 'left'
         self._eqMode = '+'
         self._keyBuff = ""    
-        self._arch = platform.release()
+        self._arch = platform.system()
             
     def periodicTable(self) -> PeriodicTableClass:
         return self._PeriodicTable

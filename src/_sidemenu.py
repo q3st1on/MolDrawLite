@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from src._classes import Frame, ButtonCanvas
 
-class SideMenu(Frame):
+class SideMenu(Frame): # main sidemenu class, extends Frame from _classes
     def __init__(self, parent, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
 
@@ -111,7 +111,7 @@ class SideMenu(Frame):
         ttk.Separator(self, orient='horizontal').pack(fill = 'x')
 
 
-    def updateElemHighlight(self, elem: int) -> None:
+    def updateElemHighlight(self, elem: int) -> None: # update selected element
         match elem:
             case 0:
                 self.R.configure(bg='gray')
@@ -146,7 +146,7 @@ class SideMenu(Frame):
             case _:
                 self.deacElem()
     
-    def updateElemButtons(self, elem: int) -> None:
+    def updateElemButtons(self, elem: int) -> None: # update colour of element buttons
         match elem:
             case 0:
                 self.R.itemconfig(self.RS, fill=self._PeriodicTable.atomNo(0).colour)
@@ -159,20 +159,20 @@ class SideMenu(Frame):
             case 8:
                 self.oxygen.itemconfig(self.oxygenS, fill=self._PeriodicTable.atomNo(8).colour)
 
-    def updateEqButtons(self) -> None:
+    def updateEqButtons(self) -> None: # update colour of equation buttons
         self.ep.itemconfig('all', fill = self._PeriodicTable.equationCol)
         self.ef.itemconfig('all', fill = self._PeriodicTable.equationCol)
         self.ee.itemconfig('all', fill = self._PeriodicTable.equationCol)
 
 
-    def deacElem(self) -> None:
+    def deacElem(self) -> None: # de-highlight all elements
         self.R.configure(bg='light gray')
         self.hydrogen.configure(bg='light gray')
         self.carbon.configure(bg='light gray')
         self.nitrogen.configure(bg='light gray')
         self.oxygen.configure(bg='light gray')
 
-    def updateSymbol(self, x: str) -> None:
+    def updateSymbol(self, x: str) -> None: # update selected equation symbol
         match x:
             case '+':
                 self.ep.configure(bg='gray')
@@ -189,12 +189,12 @@ class SideMenu(Frame):
             case _:
                 pass
     
-    def deacSymbol(self) -> None:
+    def deacSymbol(self) -> None: # deselect all equation symbols
         self.ep.configure(bg='light gray')
         self.ef.configure(bg='light gray')
         self.ee.configure(bg='light gray')
 
-    def updateBond(self, num: int) -> None:
+    def updateBond(self, num: int) -> None: # update selected bond buttons
         match num:
             case 1:
                 self.mb.configure(bg='gray')
@@ -229,8 +229,8 @@ class SideMenu(Frame):
             case _:
                 pass
 
-    def deacBond(self) -> None:
-        self.mb.configure(bg='light gray')
+    def deacBond(self) -> None: # deactivate all bond buttons
+        self.mb.configure(bg='light gray') 
         self.eb.configure(bg='light gray')
         self.pb.configure(bg='light gray')
         self.bb.configure(bg='light gray')

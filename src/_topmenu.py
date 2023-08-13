@@ -1,7 +1,7 @@
 import tkinter as tk
 from src._classes import Frame
 
-class TopMenu(Frame):
+class TopMenu(Frame): # main sidemenu class, extends Frame from _classes
     def __init__(self, parent, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
         
@@ -29,7 +29,7 @@ class TopMenu(Frame):
         self._delete = tk.Button(self, text="Delete", relief=tk.RAISED, bg='light gray', command= lambda: self._parent.setMode('delete'))
         self._delete.pack(side=tk.RIGHT, padx=2, pady=2, fill=tk.X)
 
-    def updateMode(self, mode: str) -> None:
+    def updateMode(self, mode: str) -> None: # update selected mode button
         match mode:
             case 'atom':
                 self._atom.config(bg='gray')

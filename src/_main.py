@@ -1,19 +1,16 @@
 
-from src._imageConstruct import ImageWindow
-from src._atomDicts import PeriodicTableClass
 from src._ptable import TableWindow
 from src._sidemenu import SideMenu
 from src._canvas import GenCanvas
-from src._classes import App
+from PIL import Image, ImageChops
 from src._topmenu import TopMenu
+from src._classes import App
 import tkinter.messagebox
 import tkinter as tk
-import time
-import json
 import os
-from PIL import Image, ImageChops, ImageDraw
 
-class MolDrawLite(App):
+
+class MolDrawLite(App): # Main MolDrawLite Class. All other class instances are children of this
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.title("MolDrawLite")
@@ -31,25 +28,25 @@ class MolDrawLite(App):
         
         self.bind("<KeyPress>", lambda x: self.keyDown(x))
 
-    def setBond(self, num: int) -> None:
+    def setBond(self, num: int) -> None: # sets bond number state
         self._bondNo = num
         self.setMode('bond')
         self._sideBar.updateBond(num)
     
-    def setPoly(self, side: str) -> None:
+    def setPoly(self, side: str) -> None: # sets bracked side state
         self._arcSide = side
     
-    def setSymbol(self, sym: str) -> None:
+    def setSymbol(self, sym: str) -> None: # sets equation mode state
         self._eqMode = sym
         self.setMode('equation')
         self._sideBar.updateSymbol(sym)
     
-    def setAtom(self, atom: str | int) -> None:
+    def setAtom(self, atom: str | int) -> None: # sets selected atom state
         self._element.set(atom)
         self.setMode('atom')
         self._sideBar.updateElemHighlight(self.element())
     
-    def setMode(self, mode: str) -> None:
+    def setMode(self, mode: str) -> None: # sets mode state
         self._mode = mode
         match mode:
             case 'polymer':
@@ -75,7 +72,7 @@ class MolDrawLite(App):
 
         self._topBar.updateMode(mode)
 
-    def mouseDown(self, e: tk.Event) -> None:
+    def mouseDown(self, e: tk.Event) -> None: # handle mousepress events
         match self._mode:
             case 'bond':
                 self._canvas.makeLine(e)
@@ -88,7 +85,7 @@ class MolDrawLite(App):
             case 'delete':
                 self._canvas.delete("current")
 
-    def mouseMove(self, e: tk.Event) -> None:
+    def mouseMove(self, e: tk.Event) -> None: # handle mousemove events
         match self._mode:
             case 'bond':
                 self._canvas.drawLine(e)
@@ -101,7 +98,7 @@ class MolDrawLite(App):
             case 'delete':
                 self._canvas.delete("current")
 
-    def mouseUp(self, e: tk.Event) -> None:
+    def mouseUp(self, e: tk.Event) -> None: # handle mouse release events
         match self._mode:
             case 'bond':
                 self._canvas.fixLine(e)
@@ -114,7 +111,7 @@ class MolDrawLite(App):
             case 'delete':
                 self._canvas.delete("current")
                 
-    def keyDown(self, e: tk.Event) -> None:
+    def keyDown(self, e: tk.Event) -> None: # handle key presses
         match e.keysym:
             case "B":
                 self.setMode('bond')
@@ -202,7 +199,7 @@ class MolDrawLite(App):
                     case _:
                         pass
     
-    def atomInput(self) -> None:
+    def atomInput(self) -> None: # handle atom selection via keyboard
         anum = int(self._keyBuff)
         if anum in range(1, 119):
             self._element.set(anum)
@@ -211,18 +208,18 @@ class MolDrawLite(App):
         self._keyBuff = ""
         self._sideBar.updateElemHighlight(self.element())
     
-    def genImage(self) -> None:
-        self.imageSaveTest()
-        # info = [self._canvas.gettags(i) for i in self._canvas.find_all()]
-        # if len(info) == 0:
-        #     tkinter.messagebox.showwarning("Empty Canvas!", "Empty Canvas!")
-        # else:
-        #     self.imagePopUp = ImageWindow(self, info)
-        #     self.imagePopUp.mainloop()
+    def genImage(self) -> None: # save image
+        info = [self._canvas.gettags(i) for i in self._canvas.find_all()]
+        if len(info) == 0:
+            tkinter.messagebox.showwarning("Empty Canvas!", "Empty Canvas!")
+        else:
+            self._imageX = 2000
+            self._imageY = 2000
+            self.imageSaveTest()
     
-    def imageSaveTest(self) -> None:
+    def imageSaveTest(self) -> None: # Generate image file from canvas
         pwd = os.path.dirname(os.path.realpath(__file__))
-        self._canvas.postscript(file = pwd+'\\temp.eps', colormode='color', pagewidth=2000, pageheight=2000) 
+        self._canvas.postscript(file = pwd+'\\temp.eps', colormode='color', pagewidth=self._imageX, pageheight=self._imageY) 
         img = Image.open(pwd+'\\temp.eps') 
         ma, mi = img.size
         bg = Image.new(img.mode, img.size, img.getpixel((0,0)))
@@ -235,18 +232,18 @@ class MolDrawLite(App):
             img.show()
         os.remove(pwd+'\\temp.eps')
     
-    def createTable(self, mode: str) -> None:
+    def createTable(self, mode: str) -> None: # Create periodic table menu
         self.tablewin = TableWindow(self, mode)
         if self._arch == 'Linux':
             self.tablewin.attributes('-type', 'dialog')
         self.tablewin.attributes('-topmost', True)
         self.tablewin.mainloop()
 
-    def canvas(self) -> GenCanvas:
+    def canvas(self) -> GenCanvas: # expose canvas
         return self._canvas
     
-    def sideBar(self) -> SideMenu:
+    def sideBar(self) -> SideMenu: # expose sidebar
         return self._sideBar
     
-    def topBar(self) -> TopMenu:
+    def topBar(self) -> TopMenu: # expose topbar
         return self._topBar

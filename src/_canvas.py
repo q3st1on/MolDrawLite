@@ -3,14 +3,14 @@ from src._classes import LiveCanvas
 import tkinter as tk
 import math
 
-class GenCanvas(LiveCanvas):
+class GenCanvas(LiveCanvas): # Main drawing canvas, extends LiveCanvas from _classes
     def __init__(self, parent, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
         self.bind('<Button-1>', self._parent.mouseDown)
         self.bind('<B1-Motion>', self._parent.mouseMove)
         self.bind('<ButtonRelease-1>', self._parent.mouseUp)
 
-    def makeLetter(self, e: tk.Event) -> None:
+    def makeLetter(self, e: tk.Event) -> None: # Draw letter on click
         x, y = e.x, e.y
         rx, ry = nearRound(e.x, 60), nearRound(e.y, 60)
         if len(self._bondEndsOpen) != 0:
@@ -20,7 +20,7 @@ class GenCanvas(LiveCanvas):
         x,y = self._oldLetterCoords
         self._oldLetter = self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','28','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER)
 
-    def moveLetter(self, e: tk.Event) -> None:
+    def moveLetter(self, e: tk.Event) -> None: # Move letter while mouse pressed
         x, y = e.x, e.y
         rx, ry = nearRound(e.x, 60), nearRound(e.y, 60)
         x1, y1 = self._oldLetterCoords
@@ -33,7 +33,7 @@ class GenCanvas(LiveCanvas):
         x,y = self._oldLetterCoords
         self._oldLetter = self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER)
 
-    def fixLetter(self, e: tk.Event) -> None:
+    def fixLetter(self, e: tk.Event) -> None: # fix letter on mouse release
         x, y = self._oldLetterCoords
         self.delete(self._oldLetter)
         self.create_text(x, y, text=self._parent.getElement().symbol, font=('Helvetica','18','bold'), fill=self._parent.getElement().colour, justify=tk.CENTER, tags=f"1 {self._parent.getElement().colour.replace(' ', '_')} {self._parent.getElement().symbol} {x} {y}")
@@ -42,7 +42,7 @@ class GenCanvas(LiveCanvas):
             self._bondEndsOpen.remove(self._oldLetterCoords)
         self._atomCount += 1
 
-    def makeEq(self, e: tk.Event) -> None:
+    def makeEq(self, e: tk.Event) -> None: # Draw equation object on click
         x, y = nearRound(e.x, 30), nearRound(e.y, 30)
         self._oldEqCoords = x, y
         if self._parent.eqMode() == '+':
@@ -52,7 +52,7 @@ class GenCanvas(LiveCanvas):
         elif self._parent.eqMode() == 'equilibrium':
             self._oldEqObjs = [self.create_line(x-30, y-4, x+30, y-4, x+24, y-8, x+24, y-4, fill = self._PeriodicTable.equationCol, width = 3, joinstyle=tk.MITER), self.create_line(x-24, y+4, x-24, y+8, x-30, y+4, x+30,y+4, fill = self._PeriodicTable.equationCol, width = 3, joinstyle=tk.MITER)]
 
-    def moveEq(self, e: tk.Event) -> None:
+    def moveEq(self, e: tk.Event) -> None: #Move equation object while mouse pressed
         x, y = nearRound(e.x, 30), nearRound(e.y, 30)
         if self._oldEqCoords != (x, y):
             self._oldEqCoords = (x, y)
@@ -65,7 +65,7 @@ class GenCanvas(LiveCanvas):
             elif self._parent.eqMode() == 'equilibrium':
                 self._oldEqObjs = [self.create_line(x-30, y-4, x+30, y-4, x+24, y-8, x+24, y-4, fill = self._PeriodicTable.equationCol, width = 3, joinstyle=tk.MITER), self.create_line(x-24, y+4, x-24, y+8, x-30, y+4, x+30,y+4, fill = self._PeriodicTable.equationCol, width = 3, joinstyle=tk.MITER)]
 
-    def fixEq(self, e: tk.Event) -> None:
+    def fixEq(self, e: tk.Event) -> None: # Fix equation object on mouse release
         x, y = nearRound(e.x, 30), nearRound(e.y, 30)
         for i in self._oldEqObjs:
             self.delete(i)
@@ -78,14 +78,14 @@ class GenCanvas(LiveCanvas):
             self.create_line(x-24, y+4, x-24, y+8, x-30, y+4, x+30,y+4, fill = self._PeriodicTable.equationCol, width = 3, joinstyle=tk.MITER)
         self._eqObjCount += 1
 
-    def makeLine(self, e: tk.Event) -> None:
+    def makeLine(self, e: tk.Event) -> None: # Draw bond on click
         x, y = e.x, e.y
         if len(self._atomCenters) != 0:
             self._baseCoords = closestNode((x,y), self._atomCenters)
         else:
             self._baseCoords = x,y
 
-    def drawLine(self, e: tk.Event) -> None:
+    def drawLine(self, e: tk.Event) -> None: # Move bond while mouse pressed
         x, y = e.x, e.y
         x1, y1 = self._baseCoords
         rawangle = (180+math.degrees(math.pi-math.atan2((y-y1), (x-x1)))) % 360
@@ -96,7 +96,7 @@ class GenCanvas(LiveCanvas):
             self.delete(self._oldLine)
             self._oldLine = line
 
-    def fixLine(self, e: tk.Event) -> None:
+    def fixLine(self, e: tk.Event) -> None: # Fix bond on mouse release
         x, y = e.x, e.y
         x1, y1 = self._baseCoords
         rawangle = (180+math.degrees(math.pi-math.atan2((y-y1), (x-x1)))) % 360
@@ -127,7 +127,7 @@ class GenCanvas(LiveCanvas):
         self.delete(self._oldLine)
         self._bondCount += 1
     
-    def makeBrack(self, e: tk.Event) -> None:
+    def makeBrack(self, e: tk.Event) -> None: # Draw bracket on click
         x, y = e.x, e.y
         if len(self._atomCenters) != 0:
             self._arcBaseCoords = closestNode((x,y), self._atomCenters)
@@ -138,7 +138,7 @@ class GenCanvas(LiveCanvas):
         elif self._parent._arcSide == 'left':
             self._oldArc = self.drawArc(self._arcBaseCoords, 60, (130, 100), 2, "")
     
-    def moveBrack(self, e: tk.Event) -> None:
+    def moveBrack(self, e: tk.Event) -> None: # Move bracket while mouse pressed
         newCoords = closestNode((e.x,e.y), self._atomCenters)
         if newCoords != self._arcBaseCoords:
             self._arcBaseCoords = newCoords
@@ -148,7 +148,7 @@ class GenCanvas(LiveCanvas):
             elif self._parent._arcSide == 'left':
                 self._oldArc = self.drawArc(self._arcBaseCoords, 60, (130, 100), 2, "")
         
-    def fixBrack(self, e: tk.Event) -> None:
+    def fixBrack(self, e: tk.Event) -> None: # fix bracket on mouse release
         newCoords = closestNode((e.x,e.y), self._atomCenters)
         if newCoords != self._arcBaseCoords:
             self._arcBaseCoords = newCoords
@@ -161,7 +161,7 @@ class GenCanvas(LiveCanvas):
             self.drawArc(self._arcBaseCoords, 60, (130, 100), 2, f"2 0 {self._arcBaseCoords[0]} {self._arcBaseCoords[0]}")
         
         
-    def clearAll(self) -> None:
+    def clearAll(self) -> None: # handle canvas clearing
         check = tk.messagebox.askquestion('Clear Canvas', 'Are you sure you want to clear the canvas?', icon='warning')
         if check == 'yes':
             self.delete('all')

@@ -89,7 +89,7 @@ class GenCanvas(LiveCanvas): # Main drawing canvas, extends LiveCanvas from _cla
         x, y = e.x, e.y
         x1, y1 = self._baseCoords
         rawangle = (180+math.degrees(math.pi-math.atan2((y-y1), (x-x1)))) % 360
-        angle = math.radians(min([0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360], key=lambda x:abs(x-rawangle)))
+        angle = math.radians(min([i*30 for i in range(0,13)]+[45, 135, 225, 315], key=lambda x:abs(x-rawangle)))
         ex, ey = x1+(60*math.cos(angle)), y1+((60*math.sin(angle))*-1)
         line = self.create_line(ex, ey, x1, y1, width=2)
         if line != self._oldLine:
@@ -100,7 +100,7 @@ class GenCanvas(LiveCanvas): # Main drawing canvas, extends LiveCanvas from _cla
         x, y = e.x, e.y
         x1, y1 = self._baseCoords
         rawangle = (180+math.degrees(math.pi-math.atan2((y-y1), (x-x1)))) % 360
-        angle = math.radians(min([0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360], key=lambda x:abs(x-rawangle)))
+        angle = math.radians(min([i*30 for i in range(0,13)]+[45, 135, 225, 315], key=lambda x:abs(x-rawangle)))
         fx, fy = nearRound((x1+(60*math.cos(angle))), 1), nearRound((y1+((60*math.sin(angle))*-1)), 1)
         sx, sy = x1+(15*math.cos(angle)), y1+((15*math.sin(angle))*-1)
         ex, ey = x1+(45*math.cos(angle)), y1+((45*math.sin(angle))*-1)
